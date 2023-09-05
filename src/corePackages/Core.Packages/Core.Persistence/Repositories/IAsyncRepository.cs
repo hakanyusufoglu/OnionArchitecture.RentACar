@@ -30,7 +30,7 @@ namespace Core.Persistence.Repositories
         //Dinamik Sorgulama: Örneğin araba kiralama sitesinde filtrelenecek bir sürü veri vardır. Hangi veri doldurulduysa ona göre sorgu çalıştırılır.
         Task<Paginate<TEntity>> GetListByDynamicAsync(
             DynamicQuery dynamic,
-            Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, bool>>? predicate=null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             int index = 0,
             int size = 10,

@@ -8,7 +8,7 @@
         public string? Value { get; set; }
         public string? Operator { get; set; } // => <= vs 
         public string? Logic { get; set; } // İçerisinde şu olsun gibi mantıksal ifade ve-veya
-        public IEnumerable<Filter> Filters { get; set; } //Bir filtreye başka filtreler ekleyebilirim.
+        public IEnumerable<Filter>? Filters { get; set; } //Bir filtreye başka filtreler ekleyebilirim.
         public Filter()
         {
             Field = string.Empty;
