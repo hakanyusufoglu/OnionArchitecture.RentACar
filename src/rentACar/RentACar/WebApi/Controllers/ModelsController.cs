@@ -1,8 +1,8 @@
 ﻿using Application.Features.Brands.Queries.GetList;
 using Application.Features.Models.Queries.GetList;
 using Application.Features.Models.Queries.GetListByDynamic;
-using Application.Responses;
 using Core.Application.Request;
+using Core.Application.Responses;
 using Core.Persistence.Dynamic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

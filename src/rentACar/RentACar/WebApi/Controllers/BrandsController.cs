@@ -3,8 +3,8 @@ using Application.Features.Brands.Commonds.Delete;
 using Application.Features.Brands.Commonds.Update;
 using Application.Features.Brands.Queries.GetById;
 using Application.Features.Brands.Queries.GetList;
-using Application.Responses;
 using Core.Application.Request;
+using Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers

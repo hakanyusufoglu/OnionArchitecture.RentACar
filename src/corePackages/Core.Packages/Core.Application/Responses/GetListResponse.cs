@@ -1,6 +1,6 @@
 ﻿using Core.Persistence.Paging;
 
-namespace Application.Responses
+namespace Core.Application.Responses
 {
     //hem itemler hem sayfalamla ilgil verilerim oldu
     public class GetListResponse<T> : BasePageableModel

@@ -3,8 +3,8 @@ using Application.Features.Brands.Commonds.Delete;
 using Application.Features.Brands.Commonds.Update;
 using Application.Features.Brands.Queries.GetById;
 using Application.Features.Brands.Queries.GetList;
-using Application.Responses;
 using AutoMapper;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
