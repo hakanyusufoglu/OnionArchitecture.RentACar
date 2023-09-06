@@ -27,7 +27,7 @@ namespace Core.CrossCuttingConcerns.Exceptions.Handlers
         protected override Task HandleException(Exception exception)
         {
             Response.StatusCode = StatusCodes.Status500InternalServerError;
-            string details = new BusinessProblemDetails(exception.Message).AsJson();
+            string details = new InternalServerErrorProblemDetails(exception.Message).AsJson();
             return Response.WriteAsync(details);
         }
 
