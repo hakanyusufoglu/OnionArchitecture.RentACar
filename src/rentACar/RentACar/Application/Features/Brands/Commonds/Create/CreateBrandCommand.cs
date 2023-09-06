@@ -1,13 +1,14 @@
 ﻿using Application.Features.Brands.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Transaction;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Brands.Commonds.Create
 {
     //Sen bir requestsin/ Apiden böyle bir command gelecek bizde çevirip db'ye kaydediceğiz.
-    public class CreateBrandCommand:IRequest<CreatedBrandResponse> //aslında brand nesnesi almıyoruz da sadece command alıyoruz.
+    public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ITransactionalRequest //aslında brand nesnesi almıyoruz da sadece command alıyoruz ve transactional bir requestsin diyoruz.
     {
         //Bana bir brand command requesti gelecek ben de CreatedBrandReponse döndüreceğim.
         public string Name { get; set; }
@@ -27,12 +28,13 @@ namespace Application.Features.Brands.Commonds.Create
             //CreateBrandCommand, commendi geldiğinde CreateBrandCommandHandler çalışacaktır.
             public async Task<CreatedBrandResponse>? Handle(CreateBrandCommand request, CancellationToken cancellationToken)
             {
+
                 //Aynı name'den veri eklendiğinde bu sınıftaki hata sınıfındaki throw new BrandBusinessRules fırlatılacaktır.
-               await _brandBusinessRules.BrandNameCannotBeDuplicatedWhenInserted(request.Name);
+                await _brandBusinessRules.BrandNameCannotBeDuplicatedWhenInserted(request.Name);
 
                 //Request'i brande çevir
                 Brand brand = _mapper.Map<Brand>(request);
-                brand.Id=Guid.NewGuid();
+                brand.Id = Guid.NewGuid();
 
                 await _brandRepository.AddAsync(brand);
 

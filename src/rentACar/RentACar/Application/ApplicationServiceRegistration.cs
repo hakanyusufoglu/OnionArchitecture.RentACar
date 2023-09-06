@@ -1,4 +1,7 @@
-﻿using Core.Application.Rules;
+﻿using Core.Application.Pipelines.Transaction;
+using Core.Application.Pipelines.Validation;
+using Core.Application.Rules;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -13,9 +16,17 @@ namespace Application
 
             services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
 
+            //Validationları assembly ortamında çalışırken ekle
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+
             services.AddMediatR(configuration => //mediatr tüm assembly tara commandları bul sana komut send yaptıysamonu çalıştır
             {
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+
+                //Bir request çalıştıracaksan bu Middlewareden geçir
+                configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
+                configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
             });
             return services;
         }

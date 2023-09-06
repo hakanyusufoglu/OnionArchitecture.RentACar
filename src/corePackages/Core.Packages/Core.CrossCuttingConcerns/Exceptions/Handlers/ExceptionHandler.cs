@@ -8,10 +8,12 @@ namespace Core.CrossCuttingConcerns.Exceptions.Handlers
             exception switch
             {
                 BusinessException businessException => HandleException(businessException), //Gelen exception BusinessException türünde ise HandleException(businessException) handle et
+                ValidationException validationException => HandleException(validationException),
                 _ => HandleException(exception) //Switch'in defaultu
             };
         //bu sınıf dışarıya açık olmadığı için async olsa bile HandleExceptionAsync olarak isim verilmedi
         protected abstract Task HandleException(BusinessException businessException); //bunu ortamlar örneğin http için olan sınıflar implemente etsin
+        protected abstract Task HandleException(ValidationException validationException); 
         protected abstract Task HandleException(Exception exception);
 
     }
