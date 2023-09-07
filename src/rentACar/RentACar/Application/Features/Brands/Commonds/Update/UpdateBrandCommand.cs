@@ -1,16 +1,21 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Brands.Commonds.Update
 {
-    public class UpdateBrandCommand : IRequest<UpdatedBrandResponse>
+    public class UpdateBrandCommand : IRequest<UpdatedBrandResponse>, ICacheRemoverRequest
     {
 
         //Command'in içerisinde bu yapılan istekte gerekli olan bilgiler ekleniyor. 
         public Guid Id { get; set; }
+
         public string Name { get; set; }
+        public string CacheKey => ""; //tek bir cache anahtarımız olmadığı için bunu kuyllanmıyoruz aslında
+        public bool BypassCache => false;
+        public string? CacheGroupKey => "GetBrands";
 
         public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, UpdatedBrandResponse>
         {

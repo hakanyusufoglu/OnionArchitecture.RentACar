@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -9,9 +10,19 @@ using MediatR;
 namespace Application.Features.Brands.Queries.GetList
 {
     //GetListBrandQuery querysinin geri dönüş responsu GetListResponse bu olacaktır.
-    public class GetListBrandQuery:IRequest<GetListResponse<GetListBrandListItemDto>>
+    public class GetListBrandQuery:IRequest<GetListResponse<GetListBrandListItemDto>>, ICachableRequest
     {
         public PageRequest PageRequest { get; set; }
+
+        //Yapılacak işin ismi olabilir ve key unique olmalı. Sayfa bazlı da cache olacağı için PageRequest verdik
+        public string CacheKey => $"GetListBrandQuery({PageRequest.PageIndex},{PageRequest.PageSize})";
+
+        public bool BypassCache { get; }
+
+        public TimeSpan? SlidingExpiration { get; }
+
+        public string? CacheGroupKey => "GetBrands";
+
         //CQRS
         //GetListBrandQuery querysinin geri dönüş responsu GetListResponse bu olacaktır.
         public class GetListBrandQueryHandler : IRequestHandler<GetListBrandQuery,GetListResponse<GetListBrandListItemDto>>

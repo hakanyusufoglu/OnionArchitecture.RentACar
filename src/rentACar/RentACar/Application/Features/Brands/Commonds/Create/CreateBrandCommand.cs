@@ -1,6 +1,7 @@
 ﻿using Application.Features.Brands.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Transaction;
 using Domain.Entities;
 using MediatR;
@@ -8,10 +9,14 @@ using MediatR;
 namespace Application.Features.Brands.Commonds.Create
 {
     //Sen bir requestsin/ Apiden böyle bir command gelecek bizde çevirip db'ye kaydediceğiz.
-    public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ITransactionalRequest //aslında brand nesnesi almıyoruz da sadece command alıyoruz ve transactional bir requestsin diyoruz.
+    public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ITransactionalRequest, ICacheRemoverRequest //aslında brand nesnesi almıyoruz da sadece command alıyoruz ve transactional bir requestsin diyoruz.
     {
         //Bana bir brand command requesti gelecek ben de CreatedBrandReponse döndüreceğim.
         public string Name { get; set; }
+
+        public string CacheKey => ""; //tek bir cache anahtarımız olmadığı için bunu kuyllanmıyoruz aslında
+        public bool BypassCache => false;
+        public string? CacheGroupKey => "GetBrands";
 
         public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse> // Sen bir requesthandlersin kimin ? CreateBrandCommand sınıfının
         {
