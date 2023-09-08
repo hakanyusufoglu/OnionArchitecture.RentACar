@@ -36,7 +36,7 @@ namespace Application
                 configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
             //Senden loggerservicebase istenirse sen filelogger yap. filelogger MongoLogger olarak da değiştirebiliriz
-            services.AddSingleton<LoggerServiceBase, FileLogger>();
+            services.AddSingleton<LoggerServiceBase, MsSqlLogger>();
 
             return services;
         }
